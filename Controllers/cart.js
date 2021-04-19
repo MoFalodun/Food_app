@@ -1,4 +1,6 @@
-const { addtoCart, findSingleFood } = require("../Services");
+const { addtoCart, findSingleFood, findSingleUserCart} = require("../Services");
+
+const { OrderModel, CartModel } = require('../Models')
 
 const axios = require("axios");
 
@@ -6,13 +8,11 @@ const addItemToCart = async (req, res) => {
   try {
     const { id } = req.user;
     const userId = id;
-    console.log(req.user);
-    console.log(req.user.id);
     const { foodItemId } = req.params;
     const singleFoodItem = await findSingleFood(foodItemId);
     const itemId = singleFoodItem._id;
     const { foodName, price, currency } = singleFoodItem;
-    const cummulativePrice = price * req.body.quantity;
+    const cummulativePrice = price * req.body.quantity|| price;
     const newItem = await addtoCart({
       userId,
       itemId,
@@ -35,11 +35,15 @@ const addItemToCart = async (req, res) => {
 };
 
 
-const initializeTransaction = (req, res) => {
-  const { email } = req.user;
+const initializeTransaction = async (req, res) => {
+  const { email, id } = req.user;
+  const allCart = await findSingleUserCart();
+  const userCart = allCart.filter((item, index, array) => item.userId === id)
+  await OrderModel.insertMany(userCart)
+  const cartTotal = userCart.reduce((acc, val) => val.price + acc, 0)
   const params = JSON.stringify({
     email: email,
-    amount: "20000",
+    amount: `${cartTotal * 100}`,
   });
   axios({
     hostname: "api.paystack.co",
@@ -55,6 +59,13 @@ const initializeTransaction = (req, res) => {
     },
   })
     .then((response) => {
+      const ref = response.data.data.reference
+      OrderModel.updateMany({userId : id}, { reference: ref})
+      console.log(ref);
+      // userCart.forEach(function (doc) {
+      //   db.orders.insert(doc);
+      //   db.carts.remove(doc);
+      // })
       res.status(201).json({
         status: "success",
         message: "Please proceed to payment link",

@@ -13,7 +13,7 @@ const {
   findSingleFood,
 } = require("./food");
 
-const { addtoCart, findSingleUserCart } = require("./cart")
+const { addtoCart, findSingleUserCart, moveToOrder } = require("./cart")
 
 module.exports = {
   addCustomer,
@@ -26,5 +26,6 @@ module.exports = {
   deleteSingleFood,
   findSingleFood,
   addtoCart,
-  findSingleUserCart
+  findSingleUserCart,
+  moveToOrder
 };

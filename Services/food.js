@@ -13,6 +13,7 @@ const deleteSingleFood = async (id) => FoodModel.findByIdAndDelete(id)
 
 const findSingleFood = async (id) => FoodModel.findById(id)
 
+
 module.exports = {
     addFood,
     findAllFoods,

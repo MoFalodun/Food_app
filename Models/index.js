@@ -6,4 +6,6 @@ const FoodModel = require('./food')
 
 const CartModel = require('./cart')
 
-module.exports = { CustomerModel, AdminModel, FoodModel, CartModel }
+const OrderModel = require('./orders')
+
+module.exports = { CustomerModel, AdminModel, FoodModel, CartModel, OrderModel }

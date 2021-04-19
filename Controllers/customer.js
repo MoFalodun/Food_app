@@ -1,9 +1,11 @@
 const { addCustomer, loginCustomer, findSingleUserCart } = require("../Services");
+
 const {
   hashPassword,
   comparePassword,
   addDataToToken,
   verifyToken,
+  transporter
 } = require("../Utils");
 
 const addNewUser = async (req, res) => {
@@ -13,7 +15,6 @@ const addNewUser = async (req, res) => {
       ...req.body,
       password: hashedPassword,
     });
-    console.log(addCustomer({ ...req.body, password: hashedPassword }));
     newUser.save();
     res.status(201).json({
       status: "success",
@@ -51,14 +52,14 @@ const loginUser = async (req, res) => {
 const viewCart = async (req, res) => {
   try {
     const { id } = req.user;
-    const userId = id
-    console.log(id);
-    const userCart = await findSingleUserCart(userId);
-    console.log(userCart);
+    const allCart = await findSingleUserCart();
+    const userCart = allCart.filter((item, index, array) => item.userId === id)
+    const cartTotal = userCart.reduce((acc, val) => val.price + acc, 0)
     res.status(201).json({
       status: "success",
       message: "Cart fetched successfully",
       data: userCart,
+      total: cartTotal
     });
   } catch (error) {
     console.log(error);
@@ -66,8 +67,26 @@ const viewCart = async (req, res) => {
   }
 };
 
+const signUpMessage = async (req, res, next) => {
+  try {
+    const { email, firstName } = req.body;
+    const mailOptions = await transporter.sendMail({
+      from: `"Mo's Buka" <mzdoopey10@gmail.com>`, // sender address
+      to: email, // list of receivers
+      subject: "Welcome to Mo's Buka", // Subject line
+      text: `<p>Dear ${firstName}, <br><br> Thank you for signing up to Mo's Buka. If you haven't tried out any of our delicious offers kindly head to our website. You maximum enjoyment is guaranteed. </p>`,
+      html: `<p>Dear ${firstName}, <br><br> Thank you for signing up to Mo's Buka. If you haven't tried out any of our delicious offers kindly head to our website. You maximum enjoyment is guaranteed. </p>`, // html body
+    });
+    console.log("Message sent: %s", mailOptions.messageId);
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addNewUser,
   loginUser,
-  viewCart
+  viewCart,
+  signUpMessage
 };

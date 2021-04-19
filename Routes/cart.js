@@ -5,7 +5,7 @@ const { authenticate, findFoodItemById,validateCartAddition} = require("../Middl
 const { addItemToCart, initializeTransaction } = require('../Controllers')
 
 cartRouter.post('/addItem/:foodItemId', authenticate, findFoodItemById, validateCartAddition, addItemToCart )
-cartRouter.post('/payment', authenticate, initializeTransaction)
+cartRouter.post('/paystack/payment', authenticate, initializeTransaction)
 // foodRouter.get('/foods', getAllFood)
 // foodRouter.delete('/singleFood/:id', adminAccessValidator,findFoodById, deleteFoodById )
 

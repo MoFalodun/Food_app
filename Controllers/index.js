@@ -1,4 +1,4 @@
-const { addNewUser, loginUser, viewCart } = require("./customer");
+const { addNewUser, loginUser, viewCart, signUpMessage } = require("./customer");
 
 const { addNewAdmin, logAdmin } = require("./admin");
 
@@ -16,5 +16,6 @@ module.exports = {
   deleteFoodById,
   addItemToCart,
   viewCart,
-  initializeTransaction
+  initializeTransaction,
+  signUpMessage
 };

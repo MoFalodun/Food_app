@@ -7,6 +7,4 @@ const foodAdditionSchema = Joi.object({
   currency: Joi.string().required(),
 });
 
-export default {
-  foodAdditionSchema,
-};
+export default foodAdditionSchema;

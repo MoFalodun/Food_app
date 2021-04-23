@@ -1,8 +1,10 @@
+import dotenv from 'dotenv';
+
 import AdminModel from './admin';
 
 import { hashPassword } from '../Utils';
 
-require('dotenv').config();
+dotenv.config();
 
 const hashedPassword = hashPassword(process.env.ADMIN_PASSWORD);
 const firstAdmin = {

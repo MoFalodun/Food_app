@@ -5,6 +5,4 @@ const adminLoginSchema = Joi.object({
   password: Joi.string().min(7).required(),
 });
 
-export default {
-  adminLoginSchema,
-};
+export default adminLoginSchema;

@@ -2,12 +2,13 @@
 import express, { json } from 'express';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 // require('./Models/seed')
 import {
   userRouter, adminRouter, foodRouter, cartRouter,
 } from './Routes';
 
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 

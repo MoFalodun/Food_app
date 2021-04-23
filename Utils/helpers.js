@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
+
 import { sign, verify } from 'jsonwebtoken';
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 
-require('dotenv').config();
+dotenv.config();
 
 const salt = genSaltSync(10);
 const hashPassword = (password) => hashSync(password, salt);

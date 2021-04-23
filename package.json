@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app",
+    "start": "node -r esm app",
     "dev": "nodemon -r esm app",
     "fix": "eslint --ext .js ./ --fix"
   },
@@ -21,6 +21,7 @@
     "got": "^11.8.2",
     "joi": "^17.4.0",
     "joi-phone-number": "^5.0.1",
+    "joi-phone-validator": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.4",
     "morgan": "^1.10.0",

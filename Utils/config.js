@@ -1,6 +1,8 @@
+import dotenv from 'dotenv';
+
 import { createTransport } from 'nodemailer';
 
-require('dotenv').config();
+dotenv.config();
 
 const password = process.env.PASS_WORD;
 const transporter = createTransport({

@@ -12,7 +12,6 @@ const logAdmin = async (req, res) => {
     const { email, password } = req.body;
     const loggedInAdmin = await findAdminByEmail(email);
     if (loggedInAdmin && comparePassword(password, loggedInAdmin.password)) {
-      // delete loggedInAdmin.password; not working...
       const token = addDataToToken({ email, id: loggedInAdmin.id, isAdmin: loggedInAdmin.isAdmin });
       return res.status(200).json({
         status: 'success',
@@ -29,10 +28,8 @@ const logAdmin = async (req, res) => {
 };
 
 const verifyTransaction = async (req, res) => {
-  // const { email, id } = req.user;
   const { reference } = req.params;
   try {
-    // const orderReference = userCart[0].reference
     const response = await axios({
       hostname: 'api.paystack.co',
       port: 443,

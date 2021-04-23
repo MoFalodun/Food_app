@@ -49,9 +49,6 @@ const moveToOrder = async (data) => {
 };
 
 const findUsersCart = async () => CartModel.find();
-// const findAllFoods = async () => FoodModel.find()
-
-// const deleteSingleFood = async (id) => FoodModel.findByIdAndDelete(id)
 
 const findSingleUserCart = async (userId) => CartModel.find({ userId, status: 'pending' }).populate('items.foodId');
 

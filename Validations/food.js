@@ -5,7 +5,6 @@ const foodAdditionSchema = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   price: Joi.number().positive().precision(2).required(),
   currency: Joi.string().required(),
-  // quantity: Joi.string().required(),
 });
 
 export default {

@@ -6,10 +6,10 @@ const password = process.env.PASS_WORD;
 const transporter = createTransport({
   host: 'smtp.gmail.com',
   port: 587,
-  secure: false, // true for 465, false for other ports
+  secure: false,
   auth: {
-    user: 'mzdoopey10@gmail.com', // generated ethereal user
-    pass: password, // generated ethereal password
+    user: 'mzdoopey10@gmail.com',
+    pass: password,
   },
 });
 

@@ -62,13 +62,11 @@ const initializeTransaction = async (req, res) => {
   })
     .then(async (response) => {
       await CartModel.findOneAndUpdate({ userId: id }, { reference: response.data.data.reference });
-      // const ref = response.data.data.reference
       res.status(201).json({
         status: 'success',
         message: 'Please proceed to payment link',
         data: response.data.data,
       });
-      // res.redirect(response.data.data.authorization_url)
     })
     .catch((error) => res
       .status(505)

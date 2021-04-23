@@ -13,13 +13,13 @@ const addNewUser = async (req, res) => {
     });
     newUser.save();
     delete newUser.password;
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       message: 'User registered successfully',
       data: newUser,
     });
   } catch (error) {
-    res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
+    return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
   }
 };
 
@@ -60,6 +60,7 @@ const viewCart = async (req, res) => {
 
 const signUpMessage = async (req, res, next) => {
   try {
+    console.log('kkkk');
     const { email, firstName } = req.body;
     await transporter.sendMail({
       from: '"Mo\'s Buka" <mzdoopey10@gmail.com>',
@@ -70,6 +71,8 @@ const signUpMessage = async (req, res, next) => {
     });
     return next();
   } catch (error) {
+    console.log(error);
+    console.log('oooo');
     return error.message;
   }
 };

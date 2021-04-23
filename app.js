@@ -3,10 +3,11 @@ import express, { json } from 'express';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-// require('./Models/seed')
 import {
   userRouter, adminRouter, foodRouter, cartRouter,
 } from './Routes';
+
+require('./Models/seed');
 
 dotenv.config();
 
@@ -19,7 +20,9 @@ app.use(foodRouter);
 app.use(cartRouter);
 app.use(logger('dev'));
 
-mongoose.connect(process.env.DATABASE_URL,
+const dbUrl = process.env.NODE_ENV === 'test' ? process.env.TEST_URL : process.env.DATABASE_URL;
+
+mongoose.connect(dbUrl,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -30,3 +33,5 @@ mongoose.connect(process.env.DATABASE_URL,
   .catch((err) => console.log('Could not connect to Mongodb...', err));
 
 app.listen(3000, () => console.log(`Listening on port ${3000}`));
+
+export default app;

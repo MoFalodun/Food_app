@@ -5,6 +5,7 @@ import { findCustomerByEmail } from '../Services';
 const validateSignup = (req, res, next) => {
   try {
     const { error } = signupSchema.validate(req.body);
+    console.log(error);
     if (!error) {
       return next();
     }
@@ -28,7 +29,9 @@ const loginSignup = (req, res, next) => {
 
 const checkIfUserEmailExists = async (req, res, next) => {
   try {
+    console.log('llll');
     const userMail = await findCustomerByEmail(req.body.email);
+    console.log(userMail);
     if (!userMail) {
       return next();
     }

@@ -1,4 +1,4 @@
-const { verifyToken } = require('../utils');
+import { verifyToken } from '../Utils';
 
 const authenticate = (req, res, next) => {
   try {
@@ -41,9 +41,8 @@ const adminAccessValidator = (req, res, next) => {
     }
     req.user = data;
     if (req.user.isAdmin) {
-      console.log(req.user)
       return next();
-    } console.log(req.user)
+    }
     return res.status(403).json({ status: 'fail', message: 'Only admins can access this' });
   } catch (error) {
     return res
@@ -52,4 +51,4 @@ const adminAccessValidator = (req, res, next) => {
   }
 };
 
-module.exports = { authenticate, adminAccessValidator };
+export { authenticate, adminAccessValidator };

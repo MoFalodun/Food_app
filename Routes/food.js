@@ -1,13 +1,14 @@
-const { Router } = require('express');
+import { Router } from 'express';
+
+import {
+  adminAccessValidator, validateFoodProperties, findFoodById, checkIfFoodExists,
+} from '../Middlewares';
+import { addNewFood, getAllFood, deleteFoodById } from '../Controllers';
+
 const foodRouter = Router();
 
-const { authenticate, adminAccessValidator, validateFoodProperties, findFoodById } = require("../Middlewares")
-const { addNewFood, getAllFood, deleteFoodById } = require('../Controllers')
+foodRouter.post('/food', adminAccessValidator, validateFoodProperties, checkIfFoodExists, addNewFood);
+foodRouter.get('/food', getAllFood);
+foodRouter.delete('/food/:id', adminAccessValidator, findFoodById, deleteFoodById);
 
-foodRouter.post('/add', adminAccessValidator, validateFoodProperties, addNewFood )
-foodRouter.get('/foods', getAllFood)
-foodRouter.delete('/singleFood/:id', adminAccessValidator,findFoodById, deleteFoodById )
-
-module.exports = {
-    foodRouter
-}
+export default foodRouter;

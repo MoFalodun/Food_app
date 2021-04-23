@@ -1,32 +1,29 @@
-const {
+import {
+  validateSignup, loginSignup, checkIfUserEmailExists, checkIfUserExists,
+} from './customer';
+
+import { validateLoginAdmin, checkIfAdminExists } from './admin';
+
+import {
+  validateFoodProperties, findFoodById, findFoodItemById, checkIfFoodExists, checkFoodIdParam,
+} from './food';
+
+import validateCartAddition from './cart';
+
+import { authenticate, adminAccessValidator } from './auth';
+
+export {
   validateSignup,
   loginSignup,
   checkIfUserEmailExists,
   checkIfUserExists,
-} = require("./customer");
-const {
-  validateAdminSignup,
-  validateLoginAdmin,
-  checkIfAdminExists,
-} = require("./admin");
-
-const { validateFoodProperties, findFoodById, findFoodItemById } = require("./food")
-
-const { validateCartAddition } = require('./cart')
-
-const { authenticate, adminAccessValidator } = require("./auth")
-
-module.exports = {
-  validateSignup,
-  loginSignup,
-  checkIfUserEmailExists,
-  checkIfUserExists,
-  validateAdminSignup,
   validateLoginAdmin,
   checkIfAdminExists,
   validateFoodProperties,
   authenticate, adminAccessValidator,
   findFoodById,
   findFoodItemById,
-  validateCartAddition
+  validateCartAddition,
+  checkIfFoodExists,
+  checkFoodIdParam,
 };

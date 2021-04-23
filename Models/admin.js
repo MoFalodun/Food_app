@@ -1,38 +1,29 @@
-const mongoose = require('mongoose');
+import mongoose, { model } from 'mongoose';
 
 const { Schema } = mongoose;
 
 const adminSchema = new Schema({
-    id : {
-        type: Schema.ObjectId,
-    },
-    firstName : {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    lastName : {
-        type: String,
-        required: true,
-    },
-    email : {
-        type: String,
-        required: true,
-    },
-    phoneNumber : {
-        type: String,
-        required: true,
-    },
-    password : {
-        type: String,
-        required: true,
-    },
-    isAdmin: Boolean
+  id: {
+    type: Schema.ObjectId,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  isAdmin: Boolean,
 
 },
-{timestamps: true}
-)
+{ timestamps: true });
 
-const AdminModel = mongoose.model('admin', adminSchema);
+const AdminModel = model('admin', adminSchema);
 
-module.exports = AdminModel;
+export default AdminModel;

@@ -1,37 +1,31 @@
-const mongoose = require('mongoose');
+import mongoose, { model } from 'mongoose';
 
 const { Schema } = mongoose;
 
 const foodSchema = new Schema({
-    id : {
-        type: Schema.ObjectId,
-    },
-    foodName : {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    description : {
-        type: String,
-        required: true,
-    },
-    price : {
-        type: Number,
-        required: true,
-    },
-    currency : {
-        type: String,
-        required: true,
-    },
-    // quantity : {
-    //     type: Number,
-    //     required: true,
-    // },
-
+  id: {
+    type: Schema.ObjectId,
+  },
+  foodName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  currency: {
+    type: String,
+    required: true,
+  },
 },
-{timestamps: true}
-)
+{ timestamps: true });
 
-const FoodModel = mongoose.model('food', foodSchema);
+const FoodModel = model('food', foodSchema);
 
-module.exports = FoodModel;
+export default FoodModel;

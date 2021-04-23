@@ -1,19 +1,22 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const bcrypt = require("bcrypt");
+import dotenv from 'dotenv';
 
-const salt = bcrypt.genSaltSync(10);
-const hashPassword = (password) => bcrypt.hashSync(password, salt);
+import { sign, verify } from 'jsonwebtoken';
+import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 
-const comparePassword = (plainPassword, hashedPassword) =>
-  bcrypt.compareSync(plainPassword, hashedPassword);
+dotenv.config();
+
+const salt = genSaltSync(10);
+const hashPassword = (password) => hashSync(password, salt);
+
+const comparePassword = (plainPassword, hashedPassword) => {
+  compareSync(plainPassword, hashedPassword);
+};
 
 const jwtSecret = process.env.JWT_SECRET;
-const addDataToToken = (data) => jwt.sign(data, jwtSecret, { expiresIn: "1h" });
-const verifyToken = (token) =>
-  jwt.verify(token, jwtSecret, (err, data) => ({ err, data }));
+const addDataToToken = (data) => sign(data, jwtSecret, { expiresIn: '1h' });
+const verifyToken = (token) => verify(token, jwtSecret, (err, data) => ({ err, data }));
 
-module.exports = {
+export {
   comparePassword,
   hashPassword,
   addDataToToken,

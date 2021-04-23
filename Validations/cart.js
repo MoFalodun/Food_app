@@ -1,9 +1,7 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const quantitySchema = Joi.object({
-    quantity: Joi.number().positive().precision(2),
+  quantity: Joi.number().positive().precision(2).required(),
 });
 
-module.exports = {
-    quantitySchema
-}
+export default quantitySchema;

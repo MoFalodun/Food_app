@@ -1,9 +1,11 @@
-const { userRouter } = require('./customer');
+import userRouter from './customer';
 
-const { adminRouter } = require('./admin');
+import adminRouter from './admin';
 
-const { foodRouter } = require('./food')
+import foodRouter from './food';
 
-const { cartRouter } = require('./cart')
+import cartRouter from './cart';
 
-module.exports = { userRouter, adminRouter, foodRouter, cartRouter };
+export {
+  userRouter, adminRouter, foodRouter, cartRouter,
+};

@@ -1,11 +1,13 @@
-const CustomerModel = require('./customer')
+import CustomerModel from './customer';
 
-const AdminModel = require('./admin')
+import AdminModel from './admin';
 
-const FoodModel = require('./food')
+import FoodModel from './food';
 
-const CartModel = require('./cart')
+import CartModel from './cart';
 
-const OrderModel = require('./orders')
+import OrderModel from './orders';
 
-module.exports = { CustomerModel, AdminModel, FoodModel, CartModel, OrderModel }
+export {
+  CustomerModel, AdminModel, FoodModel, CartModel, OrderModel,
+};

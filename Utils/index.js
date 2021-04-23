@@ -1,16 +1,13 @@
-const {
+import {
+  comparePassword, hashPassword, addDataToToken, verifyToken,
+} from './helpers';
+
+import transporter from './config';
+
+export {
   comparePassword,
   hashPassword,
   addDataToToken,
   verifyToken,
-} = require("./helpers");
-
-const { transporter } = require("./config")
-
-module.exports = {
-  comparePassword,
-  hashPassword,
-  addDataToToken,
-  verifyToken,
-  transporter
+  transporter,
 };

@@ -1,21 +1,22 @@
-const {
-  addCustomer,
-  loginCustomer,
-  findCustomerByEmail,
-} = require("./customer");
+import { addCustomer, loginCustomer, findCustomerByEmail } from './customer';
 
-const { addAdmin, findAdminByEmail } = require("./admin");
+import { addAdmin, findAdminByEmail } from './admin';
 
-const {
-  addFood,
-  findAllFoods,
-  deleteSingleFood,
-  findSingleFood,
-} = require("./food");
+import {
+  addFood, findAllFoods, deleteSingleFood, findSingleFood,
+} from './food';
 
-const { addtoCart, findSingleUserCart, moveToOrder } = require("./cart")
+import {
+  addtoCart,
+  findSingleUserCart,
+  moveToOrder,
+  updateCart,
+  findUsersCart,
+  updateCartReference,
+  deleteProcessedCart,
+} from './cart';
 
-module.exports = {
+export {
   addCustomer,
   loginCustomer,
   findCustomerByEmail,
@@ -27,5 +28,9 @@ module.exports = {
   findSingleFood,
   addtoCart,
   findSingleUserCart,
-  moveToOrder
+  moveToOrder,
+  updateCart,
+  findUsersCart,
+  updateCartReference,
+  deleteProcessedCart,
 };

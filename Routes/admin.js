@@ -1,13 +1,10 @@
-const { Router } = require('express');
+import { Router } from 'express';
+
+import { logAdmin } from '../Controllers';
+import { validateLoginAdmin, checkIfAdminExists } from '../Middlewares';
+
 const adminRouter = Router();
 
-const { addNewAdmin,
-    logAdmin,} = require('../Controllers')
-const {   validateAdminSignup,
-    validateLoginAdmin,
-    checkIfAdminExists, } = require('../Middlewares')
+adminRouter.post('/admin/login', validateLoginAdmin, checkIfAdminExists, logAdmin);
 
-adminRouter.post('/admin/signup', validateAdminSignup, addNewAdmin)
-adminRouter.post('/admin/login', validateLoginAdmin, checkIfAdminExists, logAdmin )
-
-module.exports = { adminRouter };
+export default adminRouter;

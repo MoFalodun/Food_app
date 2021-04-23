@@ -1,16 +1,15 @@
-const { signupSchema, loginSchema } = require("./customer");
+import { signupSchema, loginSchema } from './customer';
 
-const { adminSignupSchema, adminLoginSchema } = require("./admin");
+import adminLoginSchema from './admin';
 
-const { foodAdditionSchema } = require("./food")
+import foodAdditionSchema from './food';
 
-const { quantitySchema } = require("./cart")
+import quantitySchema from './cart';
 
-module.exports = {
+export {
   signupSchema,
   loginSchema,
-  adminSignupSchema,
   adminLoginSchema,
   foodAdditionSchema,
-  quantitySchema
+  quantitySchema,
 };

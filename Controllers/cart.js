@@ -1,85 +1,81 @@
-const { addtoCart, findSingleFood, findSingleUserCart} = require("../Services");
+import axios from 'axios';
+import {
+  addtoCart, findSingleUserCart, updateCart,
+} from '../Services';
 
-const { OrderModel, CartModel } = require('../Models')
-
-const axios = require("axios");
+import { CartModel } from '../Models';
 
 const addItemToCart = async (req, res) => {
   try {
     const { id } = req.user;
-    const userId = id;
-    const { foodItemId } = req.params;
-    const singleFoodItem = await findSingleFood(foodItemId);
-    const itemId = singleFoodItem._id;
-    const { foodName, price, currency } = singleFoodItem;
-    const cummulativePrice = price * req.body.quantity|| price;
-    const newItem = await addtoCart({
-      userId,
-      itemId,
-      foodName,
-      unitPrice: price,
-      currency,
-      price: cummulativePrice,
-      ...req.body,
-    });
-    newItem.save();
-    res.status(201).json({
-      status: "success",
-      message: "Item added successfully",
-      data: newItem,
+    const { foodId } = req.params;
+    const { quantity } = req.body;
+    const userCart = await findSingleUserCart(id);
+
+    if (userCart.length === 0) {
+      await addtoCart({
+        userId: id,
+        items: { foodId, quantity },
+      });
+    } else {
+      await updateCart({
+        userId: id,
+        foodId,
+        quantity,
+      });
+    }
+    return res.status(201).json({
+      status: 'success',
+      message: 'Food added successfully',
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ status: "fail", message: "Something went wrong." });
+    return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
   }
 };
 
-
 const initializeTransaction = async (req, res) => {
   const { email, id } = req.user;
-  const allCart = await findSingleUserCart();
-  const userCart = allCart.filter((item, index, array) => item.userId === id)
-  await OrderModel.insertMany(userCart)
-  const cartTotal = userCart.reduce((acc, val) => val.price + acc, 0)
+  const reference = `${id}${Date.now()}`;
+  const [allCart] = await findSingleUserCart(id);
+  const cartTotal = allCart.items.reduce((acc, val) => {
+    const calculation = val.foodId.price * val.quantity + acc;
+    return calculation;
+  });
   const params = JSON.stringify({
-    email: email,
+    email,
     amount: `${cartTotal * 100}`,
+    callback_url: `http://localhost:3000/verify/${reference}`,
+    reference,
   });
   axios({
-    hostname: "api.paystack.co",
+    hostname: 'api.paystack.co',
     port: 443,
-    url: "https://api.paystack.co/transaction/initialize",
-    path: "/transaction/initialize",
-    method: "POST",
+    url: 'https://api.paystack.co/transaction/initialize',
+    path: '/transaction/initialize',
+    method: 'POST',
     data: params,
     headers: {
       Authorization: `Bearer ${process.env.SECRET_KEY}`,
-      "Content-Type": "application/json",
-      "cache-control": "no-cache",
+      'Content-Type': 'application/json',
+      'cache-control': 'no-cache',
     },
   })
-    .then((response) => {
-      const ref = response.data.data.reference
-      OrderModel.updateMany({userId : id}, { reference: ref})
-      console.log(ref);
-      // userCart.forEach(function (doc) {
-      //   db.orders.insert(doc);
-      //   db.carts.remove(doc);
-      // })
+    .then(async (response) => {
+      await CartModel.findOneAndUpdate({ userId: id }, { reference: response.data.data.reference });
+      // const ref = response.data.data.reference
       res.status(201).json({
-        status: "success",
-        message: "Please proceed to payment link",
+        status: 'success',
+        message: 'Please proceed to payment link',
         data: response.data.data,
       });
       // res.redirect(response.data.data.authorization_url)
     })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+    .catch((error) => res
+      .status(505)
+      .json({ status: 'success', message: error.message }));
+};
 
-
-module.exports = {
+export {
   addItemToCart,
   initializeTransaction,
 };

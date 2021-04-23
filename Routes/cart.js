@@ -1,14 +1,16 @@
-const { Router } = require('express');
+import { Router } from 'express';
+
+import {
+  authenticate, findFoodItemById, validateCartAddition, checkFoodIdParam,
+} from '../Middlewares';
+import { addItemToCart, initializeTransaction, verifyTransaction } from '../Controllers';
+
 const cartRouter = Router();
 
-const { authenticate, findFoodItemById,validateCartAddition} = require("../Middlewares")
-const { addItemToCart, initializeTransaction } = require('../Controllers')
-
-cartRouter.post('/addItem/:foodItemId', authenticate, findFoodItemById, validateCartAddition, addItemToCart )
-cartRouter.post('/paystack/payment', authenticate, initializeTransaction)
+cartRouter.post('/cart/:foodId', authenticate, checkFoodIdParam, findFoodItemById, validateCartAddition, addItemToCart);
+cartRouter.post('/payment', authenticate, initializeTransaction);
+cartRouter.get('/verify/:reference', verifyTransaction);
 // foodRouter.get('/foods', getAllFood)
 // foodRouter.delete('/singleFood/:id', adminAccessValidator,findFoodById, deleteFoodById )
 
-module.exports = {
-    cartRouter
-}
+export default cartRouter;

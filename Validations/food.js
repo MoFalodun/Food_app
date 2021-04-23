@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const foodAdditionSchema = Joi.object({
   foodName: Joi.string().required(),
@@ -8,6 +8,6 @@ const foodAdditionSchema = Joi.object({
   // quantity: Joi.string().required(),
 });
 
-module.exports = {
-    foodAdditionSchema,
-}
+export default {
+  foodAdditionSchema,
+};

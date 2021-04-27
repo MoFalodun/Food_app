@@ -42,6 +42,7 @@ const checkFoodIdParam = async (req, res, next) => {
       .status(404)
       .json({ status: 'fail', message: 'food Id is not valid.' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
   }
 };
@@ -57,6 +58,7 @@ const findFoodItemById = async (req, res, next) => {
       .status(404)
       .json({ status: 'fail', message: 'Food item does not exist.' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
   }
 };

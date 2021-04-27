@@ -7,16 +7,16 @@ import {
 const addNewUser = async (req, res) => {
   try {
     const hashedPassword = hashPassword(req.body.password);
-    const newUser = await addCustomer({
+    const newUser = addCustomer({
       ...req.body,
       password: hashedPassword,
     });
-    newUser.save();
-    delete newUser.password;
+    const user = await newUser.save();
+    // delete newUser.password;
     return res.status(201).json({
       status: 'success',
       message: 'User registered successfully',
-      data: newUser,
+      data: user,
     });
   } catch (error) {
     return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
@@ -60,7 +60,6 @@ const viewCart = async (req, res) => {
 
 const signUpMessage = async (req, res, next) => {
   try {
-    console.log('kkkk');
     const { email, firstName } = req.body;
     await transporter.sendMail({
       from: '"Mo\'s Buka" <mzdoopey10@gmail.com>',
@@ -71,8 +70,6 @@ const signUpMessage = async (req, res, next) => {
     });
     return next();
   } catch (error) {
-    console.log(error);
-    console.log('oooo');
     return error.message;
   }
 };

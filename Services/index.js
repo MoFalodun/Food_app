@@ -1,6 +1,6 @@
 import { addCustomer, loginCustomer, findCustomerByEmail } from './customer';
 
-import { addAdmin, findAdminByEmail } from './admin';
+import findAdminByEmail from './admin';
 
 import {
   addFood, findAllFoods, deleteSingleFood, findSingleFood,
@@ -20,7 +20,6 @@ export {
   addCustomer,
   loginCustomer,
   findCustomerByEmail,
-  addAdmin,
   findAdminByEmail,
   addFood,
   findAllFoods,

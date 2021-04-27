@@ -11,7 +11,6 @@ const addItemToCart = async (req, res) => {
     const { foodId } = req.params;
     const { quantity } = req.body;
     const userCart = await findSingleUserCart(id);
-
     if (userCart.length === 0) {
       await addtoCart({
         userId: id,
@@ -37,10 +36,9 @@ const initializeTransaction = async (req, res) => {
   const { email, id } = req.user;
   const reference = `${id}${Date.now()}`;
   const [allCart] = await findSingleUserCart(id);
-  const cartTotal = allCart.items.reduce((acc, val) => {
-    const calculation = val.foodId.price * val.quantity + acc;
-    return calculation;
-  });
+  // console.log(allCart.items[0].quantity * allCart.items[0].foodId.price);
+  // eslint-disable-next-line max-len
+  const cartTotal = allCart.items.map((item) => item.foodId.price * item.quantity).reduce((acc, val) => acc + val);
   const params = JSON.stringify({
     email,
     amount: `${cartTotal * 100}`,
@@ -69,8 +67,8 @@ const initializeTransaction = async (req, res) => {
       });
     })
     .catch((error) => res
-      .status(505)
-      .json({ status: 'success', message: error.message }));
+      .status(500)
+      .json({ status: 'success', message: error }));
 };
 
 export {

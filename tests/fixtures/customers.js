@@ -15,3 +15,25 @@ export const userLogin = {
   email: user.email,
   password: userPassword,
 };
+
+export const errorSignup = {
+  email: faker.internet.email(),
+  firstName: faker.name.firstName(),
+};
+
+export const invalidEmailLogin = {
+  email: faker.phone.phoneNumber(),
+  password: faker.internet.email(),
+};
+export const errorLogin = {
+  email: faker.internet.email(),
+  password: faker.internet.email(),
+};
+export const existingUserSignup = {
+  email: user.email,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  phoneNumber: user.phoneNumber,
+  password: userPassword,
+  confirmPassword: userPassword,
+};

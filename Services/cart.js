@@ -8,7 +8,7 @@ const addtoCart = async (data) => {
 const updateCart = async (data) => {
   const { userId, foodId, quantity } = data;
   const updatedCart = await CartModel.findOneAndUpdate(
-    { userId },
+    { userId, status: 'pending' },
     { $push: { items: { foodId, quantity } } },
   );
   return updatedCart;

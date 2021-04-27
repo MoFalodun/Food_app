@@ -1,6 +1,6 @@
 import { CustomerModel } from '../Models';
 
-const addCustomer = async (data) => {
+const addCustomer = (data) => {
   const {
     firstName, lastName, email, password, phoneNumber,
   } = data;

@@ -15,6 +15,4 @@ const transporter = createTransport({
   },
 });
 
-export default {
-  transporter,
-};
+export default transporter;

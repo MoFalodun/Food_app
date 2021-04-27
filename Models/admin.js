@@ -24,6 +24,17 @@ const adminSchema = new Schema({
 },
 { timestamps: true });
 
+adminSchema.pre('save', async function save(next) {
+  const admin = await mongoose.models.admin.findOne({
+    email: this.email,
+  });
+  if (admin) {
+    await mongoose.models.admin.findOneAndDelete({ email: this.email });
+    return next();
+  }
+  return next();
+});
+
 const AdminModel = model('admin', adminSchema);
 
 export default AdminModel;

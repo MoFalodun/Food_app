@@ -8,9 +8,8 @@ dotenv.config();
 const salt = genSaltSync(10);
 const hashPassword = (password) => hashSync(password, salt);
 
-const comparePassword = (plainPassword, hashedPassword) => {
-  compareSync(plainPassword, hashedPassword);
-};
+const comparePassword = (plainPassword, hashedPassword) => (
+  compareSync(plainPassword, hashedPassword));
 
 const jwtSecret = process.env.JWT_SECRET;
 const addDataToToken = (data) => sign(data, jwtSecret, { expiresIn: '1h' });

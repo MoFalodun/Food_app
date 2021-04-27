@@ -7,19 +7,19 @@ import {
 const addNewUser = async (req, res) => {
   try {
     const hashedPassword = hashPassword(req.body.password);
-    const newUser = await addCustomer({
+    const newUser = addCustomer({
       ...req.body,
       password: hashedPassword,
     });
-    newUser.save();
-    delete newUser.password;
-    res.status(201).json({
+    const user = await newUser.save();
+    // delete newUser.password;
+    return res.status(201).json({
       status: 'success',
       message: 'User registered successfully',
-      data: newUser,
+      data: user,
     });
   } catch (error) {
-    res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
+    return res.status(500).json({ status: 'fail', message: 'Something went wrong.' });
   }
 };
 
